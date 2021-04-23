@@ -1,0 +1,54 @@
+﻿<Window x:Class="TescoSW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TescoSW"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
+            <TextBox HorizontalAlignment="Left" Margin="20,0,0,0"  TextWrapping="Wrap" VerticalAlignment="Center" Width="500" Height="25" Name="path_tb"/>
+            <Button Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Margin="5,0,0,0" Content="..." Click="Button_Click"/>
+            <Button Height="25" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Margin="20,0,0,0" Content="Načti" Name="load_btn" Click="Load_btn_Click"/>
+
+        </StackPanel>
+        <DataGrid Name="allCars_dg" Grid.Row="1" Margin="20,20,20,20" Background="White" GridLinesVisibility="All">
+           <DataGrid.Columns>
+                <DataGridTextColumn Header="Název modelu" Binding="{Binding Path=ModelName}" Width="2*"/>
+                <DataGridTextColumn Header="Datum prodeje" Binding="{Binding Path=DateOfSale, StringFormat=d.MM.yyyy}" Width="3*"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding Path=Price, StringFormat={}{0}\,\-}" Width="1*"/>
+                <DataGridTextColumn Header="DPH" Binding="{Binding Path=VAT}" Width="1*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Name="ws_dg" Grid.Row="2" Margin="20,20,20,20" Background="White" GridLinesVisibility="Horizontal" Width="300" HorizontalAlignment="Left">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Název modelu&#x0a;Cena bez DPH" Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=ModelName}"/>
+                                    <TextBlock Text="{Binding Path=Price, StringFormat=F2}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="&#x0a;Cena s DPH" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text=""/>
+                                <TextBlock Text="{Binding Path=TotalPrice, StringFormat=F2}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
